@@ -1,7 +1,5 @@
 set nocp 
 syntax on
-" indent on
-" plugin on
 filetype on
 
 " status bar, line number
