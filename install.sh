@@ -26,6 +26,9 @@ install_any() {
 # prepare downloads all items needed from network. 
 prepare() {
     # install vim plugin
+    if which -s fish; then
+        echo "set-option -g default-shell $(which fish)" >> .tmux.conf
+    fi
     curl -fLo ./.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
