@@ -23,10 +23,14 @@ install_any() {
     pacman -Suy; pacman -S fish jq emacs tmux
 }
 
+probe() {
+    which "$@" >/dev/null
+}
+
 # prepare downloads all items needed from network. 
 prepare() {
     # install vim plugin
-    if which -s fish; then
+    if probe fish; then
         echo "set-option -g default-shell $(which fish)" >> .tmux.conf
     fi
     curl -fLo ./.vim/autoload/plug.vim --create-dirs \
@@ -44,7 +48,7 @@ copy() {
 
 # install installs the common packages via package manager.
 install() {
-    if which -s yum; then
+    if probe yum; then
         install_yum tmux vim fish jq
         return
     fi
