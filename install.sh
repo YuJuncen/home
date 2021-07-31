@@ -44,6 +44,7 @@ copy() {
     cp ./.vimrc "$home"
     cp ./.tmux.conf "$home"
     cp -r .vim "$home"
+    echo 'please exec `InstallPlug` in vim for installing vim plugins'
 }
 
 # install installs the common packages via package manager.
