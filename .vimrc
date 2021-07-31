@@ -17,3 +17,10 @@ nnoremap <C-e> A
 nnoremap <C-a> I 
 inoremap <C-e> <ESC>A
 inoremap <C-a> <ESC>I
+
+call plug#begin()
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+call plug#end()
+
+PlugInstall

@@ -4,36 +4,70 @@ set -e
 
 die() {
     stack_len=${#FUNCNAME[@]}
-    echo -e "[FATAL:${BASH_SOURCE[$((stack_len-1))]}:${FUNCNAME[$((stack_len-1))]}]:${LINENO[$((stack_len-1))]}" "$@"
-    exit 
+    linenum=$(caller | awk '{print $1}' | head -n1)
+    echo -e "[Fatal in ${BASH_SOURCE[$((stack_len-1))]} (${FUNCNAME[$((stack_len-1))]}:$linenum)]" "$@"
+    exit 1
 }
 
-while [ $# -ne 0 ]; do
-    case $0 in
-    --skip-install-packages) skip_install_packages=1;;
-    --skip-install-spacemacs) skip_install_spacemace=1;;
-    --debug) set -x;;
-    *) die "unknown argument $0";;
-    esac
-    shift
-done
+install_yum() {
+    sudo yum update
+    yes | sudo yum install "$@"
+}
 
-if [ ! $skip_install_packages ]; then
+install_any() {
     sudo wget -O /usr/local/bin/pacapt \
         https://github.com/icy/pacapt/raw/ng/pacapt
     sudo chmod 755 /usr/local/bin/pacapt
     sudo ln -sv /usr/local/bin/pacapt /usr/local/bin/pacman || true
 
-    pacman -Syu fish jq emacs tmux
-fi
+    pacman -Suy; pacman -S fish jq emacs tmux
+}
 
-if [ ! $skip_install_spacemace ]; then
-    if ! which -s emacs; then
-        echo "WARN: emacs not installed"
+# prepare downloads all items needed from network. 
+prepare() {
+    # install vim plugin
+    curl -fLo ./.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+}
+
+# copy copies the artifacts into the home dir.
+# this function won't connect to the network.
+copy() {
+    home=${1:-$HOME}
+    cp ./.vimrc "$home"
+    cp ./.tmux.conf "$home"
+    cp -r .vim "$home"
+}
+
+# install installs the common packages via package manager.
+install() {
+    if which -s yum; then
+        install_yum tmux vim fish jq
+        return
     fi
-    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    install_any vim fish jq vim
+}
+
+trap 'echo "fail..." && caller' ERR
+
+while [ $# -ne 0 ]; do
+    case $1 in
+    --install-pkg) install_packages=1;;
+    --debug) set -x;;
+    --verbose | -v) set -v;;
+    --prepare ) only_prepare=1 ;;
+    *) die "unknown argument $1";;
+    esac
+    shift
+done
+
+prepare
+if [ $only_prepare ]; then
+    exit 0
 fi
 
-cp ./.vimrc ~
-cp ./.tmux.conf ~
-cp -r .vim ~/
+if [ $install_packages ]; then
+    install
+fi
+
+copy "$HOME"
