@@ -3,7 +3,7 @@ syntax on
 filetype on
 
 " status bar, line number
-set laststatus=4
+set laststatus=2
 set number relativenumber
 set ruler
 colorscheme luna-term
