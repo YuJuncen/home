@@ -30,12 +30,20 @@ probe() {
 # prepare downloads all items needed from network. 
 prepare() {
     # if fish existes, set fish as the default shell of tmux.
-    if probe fish; then
+    if probe fish && [ ! -e .tmux-fish-configured ]; then
         echo "set-option -g default-shell $(which fish)" >> .tmux.conf
+        touch .tmux-fish-configured
     fi
     # install vim-plug
-    curl -fLo ./.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    if ! [ -e .vim/autoload/plug.vim ]; then
+        curl -fLo ./.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    fi
+    # install fzf? 
+    if ! probe fzf; then
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        ~/.fzf/install
+    fi
 }
 
 # copy copies the artifacts into the home dir.

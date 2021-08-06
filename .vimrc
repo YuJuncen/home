@@ -17,10 +17,13 @@ nnoremap <C-e> $
 nnoremap <C-a> ^ 
 inoremap <C-e> <ESC>A
 inoremap <C-a> <ESC>I
+nnoremap <C-x><C-f> :Files<CR>
+inoremap <C-x><C-f> <ESC>:Files<CR>
 
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/fzf.vim'
 call plug#end()
