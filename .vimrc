@@ -25,5 +25,6 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 call plug#end()
