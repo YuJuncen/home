@@ -1,0 +1,9 @@
+nnoremap <C-e> $
+nnoremap <C-a> ^ 
+inoremap <C-e> <ESC>A
+inoremap <C-a> <ESC>I
+nnoremap <space> <leader>
+inoremap <C-h> <left>
+inoremap <C-j> <down>
+inoremap <C-k> <up>
+inoremap <C-l> <right>
