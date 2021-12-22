@@ -13,13 +13,17 @@ set hlsearch
 set expandtab
 set tabstop=4
 set shiftwidth=4
+
+" some keymaps
 nnoremap <C-e> $
 nnoremap <C-a> ^ 
 inoremap <C-e> <ESC>A
 inoremap <C-a> <ESC>I
+nnoremap <space> <leader>
 nnoremap <C-x><C-f> :Files<CR>
 inoremap <C-x><C-f> <ESC>:Files<CR>
 inoremap <M-x> <ESC>:
+let g:camelcasemotion_key = '<leader>'
 
 call plug#begin()
 Plug 'tpope/vim-sensible'
@@ -28,4 +32,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'bkad/CamelCaseMotion'
 call plug#end()
