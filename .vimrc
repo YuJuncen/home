@@ -19,6 +19,7 @@ inoremap <C-e> <ESC>A
 inoremap <C-a> <ESC>I
 nnoremap <C-x><C-f> :Files<CR>
 inoremap <C-x><C-f> <ESC>:Files<CR>
+inoremap <M-x> <ESC>:
 
 call plug#begin()
 Plug 'tpope/vim-sensible'

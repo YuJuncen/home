@@ -7,3 +7,5 @@ inoremap <C-h> <left>
 inoremap <C-j> <down>
 inoremap <C-k> <up>
 inoremap <C-l> <right>
+inoremap <M-f> <ESC>wi
+inoremap <M-b> <ESC>bi
