@@ -28,5 +28,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'justinmk/vim-sneak'
 Plug 'dag/vim-fish'
 call plug#end()
